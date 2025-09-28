@@ -32,23 +32,25 @@ int main(void) {
         cin >> name;
         for(int j = 0; j < k; j++) {
             cin >> score;
+            if (score == 0) continue;   
+
             total_score += score;
-            if (score == 0) attendance++;
-            else if (score == 100) perfect_score++;
-            else if (score > max_score) max_score = score;
-            else if (score < min_score) min_score = score;
+            attendance++;
+            if (score == 100) perfect_score++;
+            if (score > max_score) max_score = score;
+            if (score < min_score) min_score = score;
         }
 
-        students[i] = {{0, attendance, total_score, max_score, min_score, perfect_score}, name};
+        students[i] = {{0, attendance, total_score, min_score, max_score, perfect_score}, name};
     }
 
     sort(students.begin(), students.end(), [&](const Features& a, const Features& b) {
-        if (a.means[order[0]] != b.means[order[0]]) return a.means[order[0]] < b.means[order[0]];
-        if (a.means[order[1]] != b.means[order[1]]) return a.means[order[1]] < b.means[order[1]];
-        if (a.means[order[2]] != b.means[order[2]]) return a.means[order[2]] < b.means[order[2]];
-        if (a.means[order[3]] != b.means[order[3]]) return a.means[order[3]] < b.means[order[3]];
-        if (a.means[order[4]] != b.means[order[4]]) return a.means[order[4]] < b.means[order[4]];
-        return a.name < b.name;
+        for(int i = 0; i < 5; i++) {
+            int a_val = a.means[order[i]];
+            int b_val = b.means[order[i]];
+            if (a_val != b_val) return a_val > b_val;
+        }
+        return a.name > b.name;
     });
 
     for(auto s: students) {
