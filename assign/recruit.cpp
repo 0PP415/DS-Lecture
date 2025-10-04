@@ -13,6 +13,7 @@ struct Student {
 struct CANU {
     string code;
     int size;
+    int cote_sum;
 };
 
 int main(void) {
@@ -32,24 +33,40 @@ int main(void) {
             int p, q;
             cin >> p >> q;
             
+            int CANU_cnt = 0;
             int total_student = 0;
             vector<CANU> ranked_CANU;
 
             for (auto& data: datas) {
                 int CANU_size = data.second.size();
                 if (CANU_size >= k) {
-                    ranked_CANU.push_back({data.first, CANU_size});
+                    CANU_cnt += 1;
+                    total_student += CANU_size;
+
+                    int cote_sum = 0;
+                    for (auto& item: data.second) {
+                        cote_sum += item.cote;
+                    }
+                    ranked_CANU.push_back({data.first, CANU_size, cote_sum});
                 }
             }
 
             // p, q integity check
             if (p < 1 || total_student < q) continue;
 
-            sort(ranked_CANU.begin(), ranked_CANU.end(), [](auto& a, auto& b) {
-                if (a.second != b.second) return a.second > b.second;
-                else return a.first > b.first;
+            sort(ranked_CANU.begin(), ranked_CANU.end(), [](CANU& a, CANU& b) {
+                if (a.size != b.size) return a.size > b.size;
+                else return a.cote_sum > b.cote_sum;
             });
 
+            for (CANU& item: ranked_CANU) {
+                sort(datas[item.code].begin(), datas[item.code].end(), [](Student& a, Student& b) {
+                    if (a.cote != b.cote) return a.cote > b.cote;
+                    else return a.id > b.id;
+                });
+            }
+
+            
 
 
 
