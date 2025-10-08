@@ -5,20 +5,6 @@
 
 #define group vector<vector<int>>
 
-#define find_idx(idx, age, sex) \
-    do { \
-        idx = 2; \
-        if (age > 60) idx = sex == 'M' ? 0 : 1; \
-        else if (age > 15) idx = sex == 'F' ? 3 : 4; \
-    } while (0)
-
-#define print(vec) \
-    do { \
-        for(auto i: vec) { \
-            for(auto j: i) cout << j << endl; \
-        } \
-    } while (0)
-
 using namespace std;
 
 int main() {
@@ -27,13 +13,15 @@ int main() {
 
     group groups(5);
     while (N--) {
-        int id, age, idx;
+        int id, age, idx = 2;
         char sex;
         cin >> id >> age >> sex;
 
-        find_idx(idx, age, sex);
+        if (age > 15) idx = sex == 'F' ? 3 : 4;
+        if (age > 60) idx = sex == 'M' ? 0 : 1;
+
         groups[idx].push_back(id);
     }
     
-    print(groups);
+    for(auto g: groups) for(auto i: g) cout << i << endl;
 }
