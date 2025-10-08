@@ -1,27 +1,18 @@
 #include <iostream>
-#include <string>
 #include <vector>
-#include <algorithm>
-
-#define group vector<vector<int>>
 
 using namespace std;
 
 int main() {
-    int N;
+    int N, id, age; 
     cin >> N;
-
-    group groups(5);
-    while (N--) {
-        int id, age, idx = 2;
-        char sex;
-        cin >> id >> age >> sex;
-
-        if (age > 15) idx = sex == 'F' ? 3 : 4;
-        if (age > 60) idx = sex == 'M' ? 0 : 1;
-
-        groups[idx].push_back(id);
-    }
     
-    for(auto g: groups) for(auto i: g) cout << i << endl;
+    vector<vector<int>> g(5);
+    while (N--) {
+        char s; 
+        cin >> id >> age >> s;
+
+        g[age>60 ? s=='M'?0:1 : age>15 ? s=='F'?3:4 : 2].push_back(id);
+    }
+    for (auto v:g) for (int x:v) cout << x << endl;
 }
