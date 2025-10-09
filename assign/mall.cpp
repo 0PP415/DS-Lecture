@@ -43,7 +43,7 @@ int main(void) {
             }
         } 
 
-        if (empty_counter == k) break;
+        if (que.empty() && empty_counter == k) break;
     }
 
     return EXIT_SUCCESS;
