@@ -19,7 +19,6 @@ void decoding(const Now now, const int now_size) {
     char value = qts[qts_index++];
     if (value == '(') {
         int next_size = now_size / 2;
-        
         decoding({now.y, now.x}, next_size);
         decoding({now.y, now.x-next_size}, next_size);
         decoding({now.y+next_size, now.x-next_size}, next_size);
@@ -36,11 +35,6 @@ void decoding(const Now now, const int now_size) {
 
 // img -> qts
 void encoding(const Now now, const int now_size) {
-    if (now_size == 1) {
-        qts.push_back(img[now.y][now.x]);
-        return;
-    }
-
     bool is_leaf = true;
     int leaf_value = img[now.y][now.x];
     for (int row = 0; row < now_size; row++) {
@@ -57,7 +51,6 @@ void encoding(const Now now, const int now_size) {
         qts.push_back(leaf_value);
     } else {
         int next_size = now_size / 2;
-    
         qts.push_back('(');
         encoding({now.y, now.x}, next_size);
         encoding({now.y, now.x-next_size}, next_size);
@@ -70,18 +63,16 @@ void encoding(const Now now, const int now_size) {
 int main(void) {
     int k;
     string sel;
-
     cin >> k >> sel;
 
     int mat_size = pow(2, k);
     Now now = {0, mat_size-1}; // y, x
-
     if (sel == "QTS") {
         cin >> qts;
         img.assign(mat_size, string(mat_size, ' '));
 
         decoding(now, mat_size);
-        for(const string& i: img) {
+        for(const string& i: img) { // print
             for(const char j: i) {
                     cout << j;
             }
