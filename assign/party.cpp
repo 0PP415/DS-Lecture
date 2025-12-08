@@ -61,18 +61,16 @@ int main(void) {
     }
 
     int time = -2;
-    vector<char> meet_places;
+    bool done = false;
     while (true) {
         for (int i = 0; i < 26; i++) {
             if (g_visit[i] == 3) {
-                meet_places.push_back(i + 'a');
+                cout << static_cast<char>(i+'a') << "\n" << ((time == -2) ? 0 : time) << '\n';
+                done = true;
+                break;
             }
         }
-
-        if (!meet_places.empty()) {
-            cout << meet_places[0] << "\n" << ((time == -2) ? 0 : time) << '\n';
-            break;
-        }
+        if (done) break;
     
         bool isMoved = false;
         for (Friend& f: friends) {
