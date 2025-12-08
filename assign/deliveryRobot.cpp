@@ -32,7 +32,6 @@ int main(void) {
             for(int k=0; k<4; k++)
                 dist[i][j][k] = 1e9;
 
-    // 상 하 좌 우
     int dy[] = {1, -1, 0, 0};
     int dx[] = {0, 0, -1, 1};
 
@@ -48,10 +47,8 @@ int main(void) {
         State curr = pq.top();
         pq.pop();
 
-        // 메모리제이션
         if (curr.time > dist[curr.y][curr.x][curr.dir]) continue;
 
-        // 직진
         int ny = curr.y + dy[curr.dir];
         int nx = curr.x + dx[curr.dir];
         if (ny >= 0 && ny < N && nx >= 0 && nx < N && grid[ny][nx] == 0) {
@@ -62,7 +59,6 @@ int main(void) {
             }
         } 
 
-        // 회전
         for(int i = 0; i < 4; i++) {
             if (curr.dir == i) continue;
             
